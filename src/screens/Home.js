@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../context/auth.context";
+import React from 'react'
+import Header from '../components/Header'
 
 function Home() {
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  return <div>Kofi wayo</div>;
+  return (
+    <section><Header/></section>
+  )
 }
 
-export default Home;
+export default Home

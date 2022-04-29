@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { useState, createContext } from "react";
 
 const AuthContext = createContext();
 
@@ -10,13 +10,12 @@ function AuthContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
-  // login function
+  //login function
   const authLogin = async (email, password) => {
-    setLoading(true);
     await fetch("/api/users/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "context-Type": "application/json",
       },
       body: JSON.stringify({
         email,
@@ -34,13 +33,13 @@ function AuthContextProvider({ children }) {
     setLoading(false);
   };
 
-  //signup function
+  //sign up
   const authRegister = async (username, email, password) => {
     setLoading(true);
     await fetch("/api/users/register", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "context-Type": "application/json",
       },
       body: JSON.stringify({
         username,
@@ -50,23 +49,20 @@ function AuthContextProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setSuccess(true);
         setUser(data);
       })
       .catch((err) => {
-        console.log(err);
         setError(err);
       });
     setLoading(false);
   };
 
-  //logout function
-  const authLogout = () => {
+  //log out
+  const AuthLogout = () => {
     setSuccess(false);
     setUser(null);
   };
-
   return (
     <AuthProvider
       value={{
@@ -76,12 +72,14 @@ function AuthContextProvider({ children }) {
         user,
         authLogin,
         authRegister,
-        authLogout,
+        AuthLogout,
       }}
     >
       {children}
     </AuthProvider>
   );
+
+  return <AuthProvider value={{}}>{children}</AuthProvider>;
 }
 
 export { AuthContext, AuthContextProvider };
